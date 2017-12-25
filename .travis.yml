@@ -1,0 +1,15 @@
+language: cpp
+
+compiler:
+  - clang
+  - gcc
+
+before_script:
+  - cat LICENSE | grep -q $(date +%Y) || echo "License doesn't cover $(date +%Y)"
+
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make -j$(nproc)
+  - ./gtkmm_python_bindings
