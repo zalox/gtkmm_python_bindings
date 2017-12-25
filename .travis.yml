@@ -1,7 +1,6 @@
 language: cpp
 
 env:
-  - CPP="CC=gcc-4.9 && CXX=g++-4.9"
   - CPP="CC=gcc-5 && CXX=g++-5"
   - CPP="CC=gcc-6 && CXX=g++-6"
   - CPP="CC=gcc-7 && CXX=g++-7"
@@ -19,7 +18,6 @@ jobs:
             - llvm-toolchain-trusty-4.0
             - llvm-toolchain-trusty-5.0
           packages:
-            - g++-4.9
             - g++-5
             - g++-6
             - g++-7
