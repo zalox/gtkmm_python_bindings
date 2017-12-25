@@ -1,107 +1,47 @@
 language: cpp
 
-matrix:
+env:
+  - CPP="CC=gcc-4.9 && CXX=g++-4.9"
+  - CPP="CC=gcc-5 && CXX=g++-5"
+  - CPP="CC=gcc-6 && CXX=g++-6"
+  - CPP="CC=gcc-7 && CXX=g++-7"
+  - CPP="CC=clang-3.6 && CXX=clang++-3.6"
+  - CPP="CC=clang-3.7 && CXX=clang++-3.7"
+  - CPP="CC=clang-3.8 && CXX=clang++-3.8"
+  - CPP="CC=clang-3.9 && CXX=clang++-3.9"
+  - CPP="CC=clang-4.0 && CXX=clang++-4.0"
+  - CPP="CC=clang-5.0 && CXX=clang++-5.0"
+jobs:
   include:
-    - os: linux
-      addons:
-        apt:
-          sources:
-          - ubuntu-toolchain-r-test
-          packages:
-          - g++-4.9
-      env:
-        - CPP="CC=gcc-4.9 && CXX=g++-4.9"
-    - os: linux
-      addons:
-        apt:
-          sources:
-          - ubuntu-toolchain-r-test
-          packages:
-          - g++-5
-      env:
-        - CPP="CC=gcc-5 && CXX=g++-5"
-    - os: linux
-      addons:
-        apt:
-          sources:
-          - ubuntu-toolchain-r-test
-          packages:
-          - g++-6
-      env:
-        - CPP="CC=gcc-6 && CXX=g++-6"
-    - os: linux
-      addons:
-        apt:
-          sources:
-          - ubuntu-toolchain-r-test
-          packages:
-          - g++-7
-      env:
-        - CPP="CC=gcc-7 && CXX=g++-7"
-    - os: linux
+    - stage: install
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.6
-          packages:
-            - clang-3.6
-      env:
-        - CPP="CC=clang-3.6 && CXX=clang++-3.6"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.7
-          packages:
-            - clang-3.7
-      env:
-        - CPP="CC=clang-3.7 && CXX=clang++-3.7"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.8
-          packages:
-            - clang-3.8
-      env:
-        - CPP="CC=clang-3.8 && CXX=clang++-3.8"
-    - os: linux
-      addons:
-        apt:
-          sources:
             - llvm-toolchain-trusty-3.9
-          packages:
-            - clang-3.9
-      env:
-        - CPP="CC=clang-3.9 && CXX=clang++-3.9"
-    - os: linux
-      addons:
-        apt:
-          sources:
             - llvm-toolchain-trusty-4.0
-          packages:
-            - clang-4.0
-      env:
-        - CPP="CC=clang-4.0 && CXX=clang++-4.0"
-    - os: linux
-      addons:
-        apt:
-          sources:
             - llvm-toolchain-trusty-5.0
           packages:
+            - g++-4.9
+            - g++-5
+            - g++-6
+            - g++-7
+            - clang-3.6
+            - clang-3.7
+            - clang-3.8
+            - clang-3.9
+            - clang-4.0
             - clang-5.0
-      env:
-        - CPP="CC=clang-5.0 && CXX=clang++-5.0"
-
+stages:
+  - install
+  - test
 before_install:
   - eval "${CPP}"
-
 before_script:
   - cat LICENSE | grep -q $(date +%Y) || echo "License doesn't cover $(date +%Y)"
-
 script:
   - mkdir build
   - cd build
